@@ -44,7 +44,7 @@ document.addEventListenr('DOMContent',function(){
     // STEP5: SAVE FUNCTION
     function saveItem(){
         // Get value from input
-        const description = desctiptionInput.value.trim();
+        const description = descriptionInput.value.trim();
 
         // Validate (check if not empty)
         if (description === ''){
