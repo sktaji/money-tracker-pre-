@@ -1,92 +1,111 @@
 // Save as app.js
 
-// STEP1: WAITLoaded FOR PAGE TO LOAD
-document.addEventListenr('DOMContentLoaded',function(){
+document.addEventListener('DOMContentLoaded', function () {
 
-    // STEP2: GET ELEMENTS
-    const descriptionInput=document.getElementById('description');
-    const saveButton = document.getElementById('saveButton');
-    const itemList = document.getElementById('itemList');
+  // STEP2: GET ELEMENTS
+  const descriptionInput = document.getElementById('description');
+  const saveButton = document.getElementById('saveButton');
+  const itemList = document.getElementById('itemList');
 
-    //STEP3: LOAD SAVED DATA
-    //Chec if we have saved data
-    let items = [];
+  // Guard: required elements must exist
+  if (!descriptionInput || !saveButton || !itemList) {
+    console.error('Required DOM elements missing:', { descriptionInput, saveButton, itemList });
+    return;
+  }
 
-    //Try to load from localStorage
+  // STEP3: LOAD SAVED DATA
+  let items = [];
+  try {
     const savedData = localStorage.getItem('myItems');
     if (savedData) {
-        items = JSON.parse(savedData);
-        console.log('Loaded items:', items);
+      items = JSON.parse(savedData);
+      console.log('Loaded items:', items);
     }
+  } catch (err) {
+    console.error('Failed to parse saved items from localStorage:', err);
+    items = [];
+  }
 
-    //STEP4: DISPLAY FUNCTION
-    function displayItems(){
-        //Clear current list
-        itemList.innerHTML = '';
-
-        //Add each item
-        items.forEach(function(item,index){
-            //Create div element
-            const div = document.createElement('div');
-            div.className = 'list-item';
-
-            //Add content
-            div.innerHTML = `
-            <span>${item.description}</span>
-            <span>${item.date}</span>
-            `;
-
-            //Add to page
-            itemList.appendChild(div);
-        });
-    }
-
-    // STEP5: SAVE FUNCTION
-    function saveItem(){
-        // Get value from input
-        const description = descriptionInput.value.trim();
-
-        // Validate (check if not empty)
-        if (description === ''){
-            alert('Please enter something!');
-            return;
-        }
-
-        // Create new item object
-        const newItem = {
-            description: description;
-            date: new Date().toLocaleDateString();
-            id: Date.now() // Unique ID based on timestamp
-        };
-
-        // Add to array
-        items.push(newItem);
-
-        // Save to localStorage (convert to String)
-        localStorage.setItem('myItems',JSON.stringify(items));
-
-        // Clear input
-        descriptionInput.value = '';
-
-        // Refresh display
-        displayItems();
-
-        console.log('Saved:', newItem);
-    }
-
-    // STEP6: CONNECT EVENT
-    // When button is clicked, run saveItem
-    saveButton.addEventListener('click', saveItem);
-
-    // Also save when Enter key is presented in input
-    descriptionInput.addEventListenr('keypress',function(event){
-        if (event.key === 'Enter') {
-            saveItem();
-        }
+  // safe HTML escape for rendering user input
+  function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, function (m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
     });
+  }
 
-    // STEP7 : INITIAL DISPLAY
+  // STEP4: DISPLAY FUNCTION
+  function displayItems() {
+    // Clear current list
+    itemList.innerHTML = '';
+
+    if (items.length === 0) {
+      itemList.innerHTML = '<div class="empty">No items yet</div>';
+      return;
+    }
+
+    // Add each item
+    items.forEach(function (item, index) {
+      const div = document.createElement('div');
+      div.className = 'list-item';
+
+      // Add content (escape user input)
+      div.innerHTML = `
+        <span class="description">${escapeHtml(item.description)}</span>
+        <span class="date">${escapeHtml(item.date)}</span>
+      `;
+
+      // Add to page
+      itemList.appendChild(div);
+    });
+  }
+
+  // STEP5: SAVE FUNCTION
+  function saveItem() {
+    // Get value from input
+    const description = descriptionInput.value.trim();
+
+    // Validate (check if not empty)
+    if (description === '') {
+      alert('Please enter something!');
+      return;
+    }
+
+    // Create new item object
+    const newItem = {
+      description: description,
+      date: new Date().toLocaleDateString(),
+      id: Date.now() // Unique ID based on timestamp
+    };
+
+    // Add to array
+    items.push(newItem);
+
+    // Save to localStorage (convert to String)
+    localStorage.setItem('myItems', JSON.stringify(items));
+
+    // Clear input
+    descriptionInput.value = '';
+
+    // Refresh display
     displayItems();
 
-    console.log('App is ready!');
+    console.log('Saved:', newItem);
+  }
+
+  // STEP6: CONNECT EVENTS
+  // When button is clicked, run saveItem
+  saveButton.addEventListener('click', saveItem);
+
+  // Also save when Enter key is pressed in input
+  descriptionInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      saveItem();
+    }
+  });
+
+  // STEP7 : INITIAL DISPLAY
+  displayItems();
+
+  console.log('App is ready!');
 });
