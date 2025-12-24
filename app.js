@@ -1,7 +1,7 @@
 // Save as app.js
 
 // STEP1: WAITLoaded FOR PAGE TO LOAD
-document.addEventListenr('DOMContent',function(){
+document.addEventListenr('DOMContentLoad',function(){
 
     // STEP2: GET ELEMENTS
     const descriptionInput=document.getElementById('description');
