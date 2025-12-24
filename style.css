@@ -1,0 +1,85 @@
+/* Save as style.css */
+
+/* === Global Styles ===*/
+
+* {
+    /*Reset default margines/padding */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Makes sizing predictable */
+}
+
+body{
+    /* iPhone-friendly font */
+    font-family: -apple-system, sans-serif;
+
+    /* Safe area for iPhone notch */
+    padding-top: env(safe-area-inset-top);
+
+    /* Nice background */
+    background-color: #f5f5f7; 
+}
+
+/* === COMPONENT STYLES === */
+
+/* The app container */
+#app {
+/* Center on page */
+max-width: 500px;
+margine: 0 auto;
+
+/* Full height */
+min-height: 100vh;
+
+/* White background */
+background: white;
+
+}
+
+/* Header */
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: White;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Input field */
+input[type="text"]{
+    /* Full width minus padding */
+    width: calc(100% - 40px);
+
+    /* Spacing */
+    margin: 20px;
+    padding: 15px;
+
+    /* Visual styling */
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+/* Button */
+button {
+    width: calc(100% - 40px);
+    margin: 0 20px 20px;
+    padding: 15px;
+
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: bold;
+
+    /* Interactive effect */
+    cursor: pointer;
+}
+
+/* List items */
+.list-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+} 

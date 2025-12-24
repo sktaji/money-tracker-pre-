@@ -1,0 +1,48 @@
+<!-- Basic template save as index.html -->
+ <!DOCTYPE html>
+
+ <html>
+    <head>
+        <!-- HEAD: Metadata & Resources-->
+         <meta charset="UTF-8">
+         <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+         <title>My App</title>
+
+         <!-- Connect CSS -->
+          <link rel="stylesheet" href="style.css"
+    </head>
+
+ <body>
+    <!-- BODY: Visible Content-->
+     <!-- Container(box) for content -->
+
+    <div id="app">
+        <!-- Header section-->
+         <header>
+            <h1>My Money Tracker (pre)</h1>
+         </header>
+         
+         <!-- Main content-->
+         <main>
+            <!--Input field-->
+            <input type="text" id="description" placeholder="What was it?">
+            
+            <!--button-->
+            <button id="saveBuntton">Save</button>
+
+            <!--List container-->
+            <div id="ItemList"></div>
+
+         </main>
+
+         <!-- Footer -->
+          <footer>
+            <p>Your data is stored locally</p>
+          </footer>
+    </div>
+
+    <!-- Connect JavaScript(at the end for faster loading)-->
+     <script src="app.js"></script>
+
+ </body>
+ </html>
