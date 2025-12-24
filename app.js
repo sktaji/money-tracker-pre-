@@ -1,7 +1,7 @@
 // Save as app.js
 
 // STEP1: WAITLoaded FOR PAGE TO LOAD
-document.addEventListenr('DOMContentLoad',function(){
+document.addEventListenr('DOMContentLoaded',function(){
 
     // STEP2: GET ELEMENTS
     const descriptionInput=document.getElementById('description');
@@ -25,7 +25,7 @@ document.addEventListenr('DOMContentLoad',function(){
         itemList.innerHTML = '';
 
         //Add each item
-        items.forEach(funcyion(item,index){
+        items.forEach(function(item,index){
             //Create div element
             const div = document.createElement('div');
             div.className = 'list-item';
